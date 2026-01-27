@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image Resizer - EasyPDF Pro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+    }
+    header {
+      background: #2563eb;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 15px;
+    }
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #result {
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>EasyPDF Pro</h1>
+  <p>Image Resizer</p>
+</header>
+
+<div class="container">
+  <h3>Resize Image</h3>
+
+  <form id="resizeForm">
+    <input type="file" name="image" accept="image/*" required>
+    <input type="number" name="width" placeholder="Enter width (px)" required>
+    <button type="submit">Resize Image</button>
+  </form>
+
+  <div id="result"></div>
+</div>
+
+<script>
+  const form = document.getElementById("resizeForm");
+  const result = document.getElementById("result");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    result.innerText = "Resizing... ⏳";
+
+    const formData = new FormData(form);
+
+    const res = await fetch("/api/image-resize", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      result.innerHTML = `
+        <p>Resize successful ✅</p>
+        <a href="${data.downloadUrl}">
+          <button>Download Image</button>
+        </a>
+      `;
+    } else {
+      result.innerText = "Resize failed ❌";
+    }
+  });
+</script>
+
+</body>
+</html>
+

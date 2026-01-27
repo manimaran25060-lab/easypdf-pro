@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PDF to JPG - EasyPDF Pro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+    }
+
+    header {
+      background: #2563eb;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      text-align: center;
+      color: #2563eb;
+    }
+
+    input[type="file"] {
+      width: 100%;
+      margin: 20px 0;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #2563eb;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #result {
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>EasyPDF Pro</h1>
+  <p>PDF to JPG Converter</p>
+</header>
+
+<div class="container">
+  <h2>Convert PDF to JPG</h2>
+
+  <form id="pdfForm">
+    <input type="file" name="pdf" accept="application/pdf" required />
+    <button type="submit">Convert to JPG</button>
+  </form>
+
+  <div id="result"></div>
+</div>
+
+<script>
+  const form = document.getElementById("pdfForm");
+  const result = document.getElementById("result");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    result.innerText = "Converting... ⏳";
+
+    const formData = new FormData(form);
+
+    const res = await fetch("/api/pdf-to-jpg", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      result.innerHTML = `
+        <p>Conversion successful ✅</p>
+        <a href="${data.downloadUrl}">
+          <button>Download JPG</button>
+        </a>
+      `;
+    } else {
+      result.innerText = "Conversion failed ❌";
+    }
+  });
+</script>
+
+</body>
+</html>
+

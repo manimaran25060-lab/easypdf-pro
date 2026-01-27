@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image Compressor - EasyPDF Pro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+    }
+    header {
+      background: #2563eb;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+    }
+    input, button {
+      width: 100%;
+      margin-top: 15px;
+      padding: 10px;
+    }
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #result {
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>EasyPDF Pro</h1>
+  <p>Image Compressor</p>
+</header>
+
+<div class="container">
+  <h3>Compress Image (JPG / PNG)</h3>
+
+  <form id="compressForm">
+    <input type="file" name="image" accept="image/*" required>
+    <button type="submit">Compress Image</button>
+  </form>
+
+  <div id="result"></div>
+</div>
+
+<script>
+  const form = document.getElementById("compressForm");
+  const result = document.getElementById("result");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    result.innerText = "Compressing... ⏳";
+
+    const formData = new FormData(form);
+    const res = await fetch("/api/image-compress", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await res.json();
+    if (data.success) {
+      result.innerHTML = `
+        <p>Compressed successfully ✅</p>
+        <a href="${data.downloadUrl}">
+          <button>Download Image</button>
+        </a>
+      `;
+    } else {
+      result.innerText = "Compression failed ❌";
+    }
+  });
+</script>
+
+</body>
+</html>
