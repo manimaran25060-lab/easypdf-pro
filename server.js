@@ -1,95 +1,74 @@
 const express = require("express");
-const cors = require("cors");
 const path = require("path");
 const fs = require("fs");
-const multer = require("multer");
-const sharp = require("sharp");
 
 const app = express();
+
+/* =============================
+   PORT (RENDER SAFE)
+============================= */
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+/* =============================
+   MIDDLEWARE
+============================= */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+/* =============================
+   STATIC FILES
+============================= */
 app.use(express.static(path.join(__dirname, "public")));
 
-// Ensure folders exist
-["uploads", "output"].forEach(dir => {
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir);
+/* =============================
+   SEO + GOOGLE CRAWL FIX
+============================= */
+
+// robots.txt – explicitly allow Google
+app.get("/robots.txt", (req, res) => {
+  res.type("text/plain");
+  res.send("User-agent: *\nAllow: /");
 });
 
-const upload = multer({ dest: "uploads/" });
+// sitemap.xml – serve correctly
+app.get("/sitemap.xml", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "sitemap.xml"));
+});
 
-// HOME
+/* =============================
+   ROUTES – PAGES
+============================= */
+
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-
-// ================= IMAGE TOOLS =================
-
-// IMAGE COMPRESS
-app.post("/api/image-compress", upload.single("image"), async (req, res) => {
-  try {
-    const out = `img-compress-${Date.now()}.jpg`;
-    await sharp(req.file.path)
-      .jpeg({ quality: 60 })
-      .toFile(`output/${out}`);
-
-    fs.unlinkSync(req.file.path);
-    res.json({ success: true, downloadUrl: `/download/${out}` });
-  } catch (err) {
-    console.error(err);
-    res.json({ success: false });
-  }
+app.get("/image-compressor", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "compress.html"));
 });
 
-// IMAGE RESIZE
-app.post("/api/image-resize", upload.single("image"), async (req, res) => {
-  try {
-    const width = parseInt(req.body.width);
-    const out = `img-resize-${Date.now()}.jpg`;
-
-    await sharp(req.file.path)
-      .resize({ width })
-      .jpeg({ quality: 80 })
-      .toFile(`output/${out}`);
-
-    fs.unlinkSync(req.file.path);
-    res.json({ success: true, downloadUrl: `/download/${out}` });
-  } catch (err) {
-    console.error(err);
-    res.json({ success: false });
-  }
+app.get("/image-resizer", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "resize.html"));
 });
 
-// JPG ↔ PNG
-app.post("/api/jpg-png", upload.single("image"), async (req, res) => {
-  try {
-    const ext = path.extname(req.file.originalname).toLowerCase();
-    let out;
-
-    if (ext === ".png") {
-      out = `png-to-jpg-${Date.now()}.jpg`;
-      await sharp(req.file.path).jpeg({ quality: 90 }).toFile(`output/${out}`);
-    } else {
-      out = `jpg-to-png-${Date.now()}.png`;
-      await sharp(req.file.path).png().toFile(`output/${out}`);
-    }
-
-    fs.unlinkSync(req.file.path);
-    res.json({ success: true, downloadUrl: `/download/${out}` });
-  } catch (err) {
-    console.error(err);
-    res.json({ success: false });
-  }
+app.get("/jpg-to-png", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "jpg-png.html"));
 });
 
-// DOWNLOAD
-app.get("/download/:file", (req, res) => {
-  res.download(path.join(__dirname, "output", req.params.file));
+app.get("/privacy", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "privacy.html"));
 });
 
+/* =============================
+   404 HANDLER
+============================= */
+app.use((req, res) => {
+  res.status(404).send("404 – Page Not Found");
+});
+
+/* =============================
+   START SERVER
+============================= */
 app.listen(PORT, () => {
   console.log(`EasyPDF Pro running on port ${PORT}`);
 });
