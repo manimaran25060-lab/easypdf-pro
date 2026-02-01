@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Image Compressor – EasyPDF Pro</title>
+  <meta name="description" content="Compress images online with manual quality control. Free, fast & secure." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">EasyPDF<span>Pro</span></div>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/image-compressor.html">Image Compressor</a>
+  </nav>
+</header>
+
+<section class="tool-page">
+  <h1>Image Compressor</h1>
+  <p class="subtitle">Reduce image size without losing visible quality.</p>
+
+  <div class="tool-box">
+
+    <input type="file" id="upload" accept="image/*" />
+
+    <div class="option-group">
+      <label>Compression Quality</label>
+      <input type="range" id="quality" min="10" max="100" value="70" />
+      <span id="qualityValue">70%</span>
+    </div>
+
+    <button onclick="compressImage()">Compress Image</button>
+
+    <canvas id="canvas"></canvas>
+
+    <div class="result-info" id="info"></div>
+
+    <a id="download" style="display:none;" download="compressed-image.jpg">
+      Download Compressed Image
+    </a>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <p>© 2026 EasyPDF Pro</p>
+</footer>
+
+<script src="compressor.js"></script>
+</body>
+</html>

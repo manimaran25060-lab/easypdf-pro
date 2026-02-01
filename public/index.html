@@ -2,123 +2,69 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>EasyPDF Pro – Free Image & PDF Tools</title>
+  <title>EasyPDF Pro – Free Online Image Tools</title>
 
-  <!-- SEO META -->
-  <meta name="description" content="EasyPDF Pro offers free online image compressor, image resizer, JPG to PNG converter and PDF tools. Fast, simple and secure." />
-  <meta name="keywords" content="image compressor, image resizer, jpg to png, pdf tools, free image tools" />
-  <meta name="author" content="EasyPDF Pro" />
-
-  <!-- IMPORTANT: GOOGLE INDEXING -->
-  <meta name="robots" content="index, follow" />
-  <meta name="googlebot" content="index, follow" />
-
+  <meta name="description" content="Free online image tools – resize, compress, convert JPG to PNG and more. No upload. Fast & secure." />
+  <meta name="keywords" content="image resizer, image compressor, jpg to png, png to jpg, free image tools" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f4f6f8;
-      color: #333;
-    }
-
-    header {
-      background: #2563eb;
-      color: #fff;
-      padding: 40px 20px;
-      text-align: center;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 36px;
-    }
-
-    header p {
-      margin-top: 10px;
-      font-size: 16px;
-      opacity: 0.95;
-    }
-
-    .container {
-      max-width: 1000px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-
-    h2 {
-      margin-top: 40px;
-      margin-bottom: 20px;
-      color: #2563eb;
-    }
-
-    .tools {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-    }
-
-    .tool {
-      background: #ffffff;
-      border-radius: 10px;
-      padding: 25px;
-      text-align: center;
-      text-decoration: none;
-      color: #111;
-      font-weight: bold;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-      transition: all 0.2s ease;
-      border: 2px solid #2563eb;
-    }
-
-    .tool:hover {
-      background: #2563eb;
-      color: #ffffff;
-      transform: translateY(-3px);
-    }
-
-    footer {
-      margin-top: 60px;
-      padding: 20px;
-      text-align: center;
-      font-size: 14px;
-      color: #555;
-    }
-
-    footer a {
-      color: #2563eb;
-      text-decoration: none;
-      font-weight: bold;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
 
-  <header>
-    <h1>EasyPDF Pro</h1>
-    <p>Fast & Free Image Tools</p>
-  </header>
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="logo">EasyPDF<span>Pro</span></div>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/image-resizer.html">Resize</a>
+    <a href="/image-compressor.html">Compress</a>
+    <a href="/jpg-png-converter.html">Convert</a>
+  </nav>
+</header>
 
-  <div class="container">
+<!-- HERO -->
+<section class="hero">
+  <h1>Free Online Image Tools</h1>
+  <p>Resize, compress & convert images instantly.  
+     No signup. No upload. 100% browser based.</p>
+</section>
 
-    <h2>PDF Tools</h2>
-    <p>PDF tools are coming soon 🚧</p>
+<!-- TOOLS GRID -->
+<section class="tools">
 
-    <h2>Image Tools</h2>
-    <div class="tools">
-      <a class="tool" href="/image-compressor">Image Compressor</a>
-      <a class="tool" href="/image-resizer">Image Resizer</a>
-      <a class="tool" href="/jpg-to-png">JPG → PNG</a>
-    </div>
+  <a href="/image-resizer.html" class="tool-card">
+    <h2>Image Resizer</h2>
+    <p>Resize images by percentage or custom width & height.</p>
+  </a>
 
-  </div>
+  <a href="/image-compressor.html" class="tool-card">
+    <h2>Image Compressor</h2>
+    <p>Compress images with manual quality control.</p>
+  </a>
 
-  <footer>
-    © 2026 EasyPDF Pro |
-    <a href="/privacy">Privacy Policy</a>
-  </footer>
+  <a href="/jpg-png-converter.html" class="tool-card">
+    <h2>JPG ↔ PNG Converter</h2>
+    <p>Convert JPG to PNG or PNG to JPG instantly.</p>
+  </a>
+
+</section>
+
+<!-- WHY US -->
+<section class="why">
+  <h2>Why EasyPDF Pro?</h2>
+  <ul>
+    <li>⚡ Fast – works fully in your browser</li>
+    <li>🔒 Secure – no server upload</li>
+    <li>📱 Mobile friendly</li>
+    <li>💯 Free forever</li>
+  </ul>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>© 2026 EasyPDF Pro · <a href="/privacy.html">Privacy Policy</a></p>
+</footer>
 
 </body>
 </html>

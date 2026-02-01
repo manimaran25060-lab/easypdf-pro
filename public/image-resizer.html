@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Image Resizer – EasyPDF Pro</title>
+  <meta name="description" content="Resize images online by percentage or dimensions with quality control. Free & secure." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">EasyPDF<span>Pro</span></div>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/image-resizer.html">Image Resizer</a>
+  </nav>
+</header>
+
+<section class="tool-page">
+  <h1>Image Resizer</h1>
+  <p class="subtitle">Resize images by percentage or custom dimensions.</p>
+
+  <div class="tool-box">
+
+    <input type="file" id="upload" accept="image/*" />
+
+    <div class="options">
+
+      <div class="option-group">
+        <label>
+          <input type="radio" name="mode" value="percent" checked />
+          Percentage (%)
+        </label>
+        <input type="range" id="percent" min="10" max="100" value="50" />
+        <span id="percentValue">50%</span>
+      </div>
+
+      <div class="option-group">
+        <label>
+          <input type="radio" name="mode" value="dimension" />
+          Dimensions (px)
+        </label>
+        <div class="dimension-inputs">
+          <input type="number" id="width" placeholder="Width" />
+          <input type="number" id="height" placeholder="Height" />
+        </div>
+      </div>
+
+      <div class="option-group">
+        <label>Quality</label>
+        <input type="range" id="quality" min="10" max="100" value="80" />
+        <span id="qualityValue">80%</span>
+      </div>
+
+    </div>
+
+    <button onclick="resizeImage()">Resize Image</button>
+
+    <canvas id="canvas"></canvas>
+
+    <a id="download" style="display:none;" download="resized-image.jpg">
+      Download Image
+    </a>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <p>© 2026 EasyPDF Pro</p>
+</footer>
+
+<script src="resizer.js"></script>
+</body>
+</html>

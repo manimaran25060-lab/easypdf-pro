@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>JPG ↔ PNG Converter – EasyPDF Pro</title>
+  <meta name="description" content="Convert JPG to PNG or PNG to JPG online for free." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">EasyPDF<span>Pro</span></div>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/jpg-png-converter.html">JPG ↔ PNG</a>
+  </nav>
+</header>
+
+<section class="tool-page">
+  <h1>JPG ↔ PNG Converter</h1>
+  <p class="subtitle">
+    Upload one image. We automatically convert it to the other format.
+  </p>
+
+  <div class="tool-box">
+
+    <input type="file" id="upload" accept="image/jpeg,image/png" />
+
+    <div class="result-info" id="formatInfo"></div>
+
+    <button onclick="convertImage()">Convert Image</button>
+
+    <canvas id="canvas"></canvas>
+
+    <a id="download" style="display:none;">
+      Download Converted Image
+    </a>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <p>© 2026 EasyPDF Pro</p>
+</footer>
+
+<script src="converter.js"></script>
+</body>
+</html>

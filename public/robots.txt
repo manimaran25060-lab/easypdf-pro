@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://easypdf-pro-ud2k.onrender.com/sitemap.xml
