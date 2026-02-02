@@ -1,54 +1,40 @@
-const upload = document.getElementById("upload");
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-const formatInfo = document.getElementById("formatInfo");
-
-let img = new Image();
-let outputFormat = "image/png";
-
-upload.addEventListener("change", (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
-
-  if (file.type === "image/jpeg") {
-    outputFormat = "image/png";
-    formatInfo.innerHTML = "Input: JPG → Output: PNG";
-  } else if (file.type === "image/png") {
-    outputFormat = "image/jpeg";
-    formatInfo.innerHTML = "Input: PNG → Output: JPG";
-  } else {
-    alert("Only JPG or PNG allowed");
-    return;
-  }
-
-  const reader = new FileReader();
-  reader.onload = () => img.src = reader.result;
-  reader.readAsDataURL(file);
-});
-
 function convertImage() {
-  if (!img.src) {
-    alert("Please upload an image first");
+  const input = document.getElementById("inputImage");
+  const format = document.getElementById("format").value;
+
+  if (!input.files.length) {
+    alert("Please select an image");
     return;
   }
 
-  canvas.width = img.width;
-  canvas.height = img.height;
+  const file = input.files[0];
+  const img = new Image();
+  const reader = new FileReader();
 
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(img, 0, 0);
+  reader.onload = () => {
+    img.src = reader.result;
+  };
 
-  const dataURL = canvas.toDataURL(
-    outputFormat,
-    outputFormat === "image/jpeg" ? 0.95 : undefined
-  );
+  img.onload = () => {
+    const canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
 
-  const download = document.getElementById("download");
-  download.href = dataURL;
-  download.download =
-    outputFormat === "image/png"
-      ? "converted.png"
-      : "converted.jpg";
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
 
-  download.style.display = "block";
+    canvas.toBlob(blob => {
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+
+      const ext =
+        format === "image/png" ? "png" :
+        format === "image/webp" ? "webp" : "jpg";
+
+      a.download = "converted-image." + ext;
+      a.click();
+    }, format, 0.92);
+  };
+
+  reader.readAsDataURL(file);
 }
