@@ -1,53 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Image Resizer - EasyPDF Pro</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>Image Resizer – EasyPDF Pro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
 <header class="topbar">
   <div class="logo">EasyPDF Pro</div>
   <nav>
-    <a href="/">Home</a>
-    <a href="/image-resizer.html">Resize</a>
-    <a href="/image-compressor.html">Compress</a>
-    <a href="/image-converter.html">Convert</a>
+    <a href="index.html">Home</a>
+    <a href="image-resizer.html" class="active">Resize</a>
+    <a href="image-compressor.html">Compress</a>
+    <a href="image-converter.html">Convert</a>
   </nav>
 </header>
 
-<main class="tool-container">
+<main class="container">
   <h1>Image Resizer</h1>
-  <p class="subtitle">Resize images by percentage or custom dimensions. 100% browser based.</p>
+  <p class="subtitle">
+    Resize images by percentage or custom width & height.  
+    100% browser based. No upload.
+  </p>
 
   <div class="card">
 
-    <input type="file" id="imageInput" accept="image/*">
+    <label class="upload-box">
+      <input type="file" id="imageInput" accept="image/*" hidden />
+      <span>📂 Click to select image</span>
+    </label>
 
     <div class="resize-options">
       <label>
-        <input type="radio" name="mode" value="percent" checked>
+        <input type="radio" name="mode" value="percent" checked />
         Percentage (%)
       </label>
       <label>
-        <input type="radio" name="mode" value="custom">
-        Width & Height
+        <input type="radio" name="mode" value="dimension" />
+        Width & Height (px)
       </label>
     </div>
 
     <div id="percentBox">
-      <input type="range" id="percent" min="10" max="200" value="50">
-      <span id="percentLabel">50%</span>
+      <input type="range" id="percentRange" min="10" max="100" value="50" />
+      <div class="range-value">
+        Size: <span id="percentValue">50</span>%
+      </div>
     </div>
 
-    <div id="customBox" style="display:none;">
-      <input type="number" id="width" placeholder="Width (px)">
-      <input type="number" id="height" placeholder="Height (px)">
+    <div id="dimensionBox" style="display:none;">
+      <input type="number" id="widthInput" placeholder="Width (px)" />
+      <input type="number" id="heightInput" placeholder="Height (px)" />
     </div>
 
     <button id="resizeBtn">Resize & Download</button>
 
+    <canvas id="canvas" style="display:none;"></canvas>
   </div>
 </main>
 
