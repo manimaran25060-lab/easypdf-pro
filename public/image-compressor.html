@@ -1,54 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Image Compressor – EasyPDF Pro</title>
-  <meta name="description" content="Compress images online with manual quality control. Free, fast & secure." />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<title>Image Compressor – EasyPDF Pro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Compress images online with manual quality control. Free browser-based image compressor.">
 
-  <link rel="stylesheet" href="style.css" />
+<style>
+* {
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f4f6fb;
+  color: #222;
+}
+
+header {
+  background: #3b64e6;
+  color: #fff;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 16px;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+.card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.upload-box {
+  border: 2px dashed #3b64e6;
+  padding: 30px;
+  text-align: center;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.upload-box:hover {
+  background: #f0f4ff;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.preview {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.preview img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.slider-box {
+  margin-top: 20px;
+}
+
+.slider-box label {
+  font-weight: 600;
+}
+
+.slider-box input {
+  width: 100%;
+}
+
+.info {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+button {
+  margin-top: 25px;
+  width: 100%;
+  padding: 14px;
+  background: #3b64e6;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #2f52c6;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  font-size: 14px;
+}
+</style>
 </head>
+
 <body>
 
-<header class="navbar">
-  <div class="logo">EasyPDF<span>Pro</span></div>
+<header>
+  <strong>EasyPDF Pro</strong>
   <nav>
     <a href="/">Home</a>
-    <a href="/image-compressor.html">Image Compressor</a>
+    <a href="/image-resizer.html">Resize</a>
+    <a href="/jpg-png.html">Convert</a>
   </nav>
 </header>
 
-<section class="tool-page">
+<div class="container">
   <h1>Image Compressor</h1>
-  <p class="subtitle">Reduce image size without losing visible quality.</p>
+  <p class="subtitle">Compress images with manual quality control. 100% browser based.</p>
 
-  <div class="tool-box">
+  <div class="card">
 
-    <input type="file" id="upload" accept="image/*" />
+    <label class="upload-box">
+      Click to select image
+      <input type="file" id="upload" accept="image/*">
+    </label>
 
-    <div class="option-group">
-      <label>Compression Quality</label>
-      <input type="range" id="quality" min="10" max="100" value="70" />
-      <span id="qualityValue">70%</span>
+    <div class="preview" id="preview"></div>
+
+    <div class="slider-box">
+      <label>Quality: <span id="qvalue">80</span>%</label>
+      <input type="range" id="quality" min="1" max="100" value="80">
     </div>
 
-    <button onclick="compressImage()">Compress Image</button>
+    <div class="info" id="sizeInfo"></div>
 
-    <canvas id="canvas"></canvas>
-
-    <div class="result-info" id="info"></div>
-
-    <a id="download" style="display:none;" download="compressed-image.jpg">
-      Download Compressed Image
-    </a>
+    <button onclick="compressImage()">Compress & Download</button>
 
   </div>
-</section>
+</div>
 
-<footer class="footer">
-  <p>© 2026 EasyPDF Pro</p>
+<footer>
+  © 2026 EasyPDF Pro
 </footer>
 
-<script src="compressor.js"></script>
+<script>
+let img = new Image();
+let originalSize = 0;
+
+document.getElementById("upload").addEventListener("change", e => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  originalSize = (file.size / 1024).toFixed(2);
+
+  const reader = new FileReader();
+  reader.onload = () => img.src = reader.result;
+  reader.readAsDataURL(file);
+});
+
+img.onload = () => {
+  document.getElementById("preview").innerHTML =
+    `<img src="${img.src}">`;
+  document.getElementById("sizeInfo").innerText =
+    `Original size: ${originalSize} KB`;
+};
+
+document.getElementById("quality").addEventListener("input", e => {
+  document.getElementById("qvalue").innerText = e.target.value;
+});
+
+function compressImage() {
+  if (!img.src) {
+    alert("Please select an image first");
+    return;
+  }
+
+  const quality = document.getElementById("quality").value / 100;
+
+  const canvas = document.createElement("canvas");
+  canvas.width = img.width;
+  canvas.height = img.height;
+
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(img, 0, 0);
+
+  canvas.toBlob(blob => {
+    const newSize = (blob.size / 1024).toFixed(2);
+    document.getElementById("sizeInfo").innerText =
+      `Original: ${originalSize} KB | Compressed: ${newSize} KB`;
+
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "compressed-image.jpg";
+    link.click();
+  }, "image/jpeg", quality);
+}
+</script>
+
 </body>
 </html>
