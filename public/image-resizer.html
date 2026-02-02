@@ -1,61 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Image Resizer – EasyPDF Pro</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header class="header">
+<header class="navbar">
   <div class="logo">EasyPDF<span>Pro</span></div>
   <nav>
     <a href="/">Home</a>
-    <a href="image-resizer.html">Resize</a>
-    <a href="image-compressor.html">Compress</a>
-    <a href="image-converter.html">Convert</a>
+    <a href="/image-resizer.html" class="active">Resize</a>
+    <a href="/image-compressor.html">Compress</a>
+    <a href="/image-converter.html">Convert</a>
   </nav>
 </header>
 
-<section class="hero">
+<main class="tool-container">
   <h1>Image Resizer</h1>
-  <p>Resize images by percentage or custom width & height. 100% browser-based.</p>
-</section>
+  <p class="subtitle">
+    Resize images by percentage or custom width & height.  
+    100% browser based. No upload.
+  </p>
 
-<section class="tools">
-  <div class="tool-card">
+  <div class="card">
 
-    <input type="file" id="fileInput" accept="image/*">
+    <input type="file" id="imageInput" accept="image/*">
 
-    <div style="margin:15px 0;">
+    <div class="options">
       <label>
         <input type="radio" name="mode" value="percent" checked>
         Percentage (%)
       </label>
-      &nbsp;&nbsp;
       <label>
-        <input type="radio" name="mode" value="custom">
+        <input type="radio" name="mode" value="px">
         Width & Height (px)
       </label>
     </div>
 
-    <div id="percentBox">
+    <div id="percentControls">
       <input type="range" id="percentRange" min="10" max="100" value="50">
-      <p>Size: <span id="percentValue">50</span>%</p>
+      <div class="value">Size: <span id="percentValue">50</span>%</div>
     </div>
 
-    <div id="customBox" style="display:none;">
+    <div id="pxControls" style="display:none;">
       <input type="number" id="widthInput" placeholder="Width (px)">
       <input type="number" id="heightInput" placeholder="Height (px)">
     </div>
 
-    <button onclick="resizeImage()">Resize & Download</button>
-
-    <canvas id="canvas" style="display:none;"></canvas>
-
+    <button id="resizeBtn">Resize & Download</button>
   </div>
-</section>
+</main>
 
 <footer>
-  ©
+  © 2026 EasyPDF Pro
+</footer>
+
+<script src="resizer.js"></script>
+</body>
+</html>
