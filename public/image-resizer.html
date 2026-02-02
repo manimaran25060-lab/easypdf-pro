@@ -1,76 +1,262 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Image Resizer – EasyPDF Pro</title>
-  <meta name="description" content="Resize images online by percentage or dimensions with quality control. Free & secure." />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<title>Image Resizer – EasyPDF Pro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Resize images online by percentage or custom size. Free browser-based image resizer.">
 
-  <link rel="stylesheet" href="style.css" />
+<style>
+* {
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f4f6fb;
+  color: #222;
+}
+
+header {
+  background: #3b64e6;
+  color: #fff;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 16px;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+.card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.upload-box {
+  border: 2px dashed #3b64e6;
+  padding: 30px;
+  text-align: center;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.upload-box:hover {
+  background: #f0f4ff;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.preview {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.preview img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.controls label {
+  font-weight: 600;
+}
+
+.controls input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 6px;
+}
+
+.radio-group {
+  margin-top: 20px;
+}
+
+.radio-group label {
+  margin-right: 15px;
+}
+
+button {
+  margin-top: 25px;
+  width: 100%;
+  padding: 14px;
+  background: #3b64e6;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #2f52c6;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  font-size: 14px;
+}
+
+@media (max-width: 600px) {
+  .controls {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
 </head>
+
 <body>
 
-<header class="navbar">
-  <div class="logo">EasyPDF<span>Pro</span></div>
+<header>
+  <strong>EasyPDF Pro</strong>
   <nav>
     <a href="/">Home</a>
-    <a href="/image-resizer.html">Image Resizer</a>
+    <a href="/image-compressor.html">Compress</a>
+    <a href="/jpg-png.html">Convert</a>
   </nav>
 </header>
 
-<section class="tool-page">
+<div class="container">
   <h1>Image Resizer</h1>
-  <p class="subtitle">Resize images by percentage or custom dimensions.</p>
+  <p class="subtitle">Resize images by percentage or custom width & height. 100% browser based.</p>
 
-  <div class="tool-box">
+  <div class="card">
 
-    <input type="file" id="upload" accept="image/*" />
+    <label class="upload-box">
+      Click to select image
+      <input type="file" id="upload" accept="image/*">
+    </label>
 
-    <div class="options">
+    <div class="preview" id="preview"></div>
 
-      <div class="option-group">
-        <label>
-          <input type="radio" name="mode" value="percent" checked />
-          Percentage (%)
-        </label>
-        <input type="range" id="percent" min="10" max="100" value="50" />
-        <span id="percentValue">50%</span>
-      </div>
-
-      <div class="option-group">
-        <label>
-          <input type="radio" name="mode" value="dimension" />
-          Dimensions (px)
-        </label>
-        <div class="dimension-inputs">
-          <input type="number" id="width" placeholder="Width" />
-          <input type="number" id="height" placeholder="Height" />
-        </div>
-      </div>
-
-      <div class="option-group">
-        <label>Quality</label>
-        <input type="range" id="quality" min="10" max="100" value="80" />
-        <span id="qualityValue">80%</span>
-      </div>
-
+    <div class="radio-group">
+      <label>
+        <input type="radio" name="mode" value="percent" checked>
+        Percentage
+      </label>
+      <label>
+        <input type="radio" name="mode" value="custom">
+        Width & Height
+      </label>
     </div>
 
-    <button onclick="resizeImage()">Resize Image</button>
+    <div class="controls">
+      <div>
+        <label>Percentage (%)</label>
+        <input type="number" id="percent" value="50">
+      </div>
+      <div>
+        <label>Width (px)</label>
+        <input type="number" id="width">
+      </div>
+      <div>
+        <label>Height (px)</label>
+        <input type="number" id="height">
+      </div>
+    </div>
 
-    <canvas id="canvas"></canvas>
-
-    <a id="download" style="display:none;" download="resized-image.jpg">
-      Download Image
-    </a>
+    <button onclick="resizeImage()">Resize & Download</button>
 
   </div>
-</section>
+</div>
 
-<footer class="footer">
-  <p>© 2026 EasyPDF Pro</p>
+<footer>
+  © 2026 EasyPDF Pro
 </footer>
 
-<script src="resizer.js"></script>
+<script>
+let img = new Image();
+let originalWidth, originalHeight;
+
+document.getElementById("upload").addEventListener("change", e => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    img.src = reader.result;
+  };
+  reader.readAsDataURL(file);
+});
+
+img.onload = () => {
+  originalWidth = img.width;
+  originalHeight = img.height;
+
+  document.getElementById("preview").innerHTML =
+    `<img src="${img.src}"><p>${originalWidth} × ${originalHeight}px</p>`;
+};
+
+function resizeImage() {
+  if (!img.src) {
+    alert("Please select an image first");
+    return;
+  }
+
+  const mode = document.querySelector('input[name="mode"]:checked').value;
+  let newW, newH;
+
+  if (mode === "percent") {
+    const p = parseInt(document.getElementById("percent").value) || 100;
+    newW = originalWidth * p / 100;
+    newH = originalHeight * p / 100;
+  } else {
+    newW = parseInt(document.getElementById("width").value);
+    newH = parseInt(document.getElementById("height").value);
+    if (!newW || !newH) {
+      alert("Enter width and height");
+      return;
+    }
+  }
+
+  const canvas = document.createElement("canvas");
+  canvas.width = newW;
+  canvas.height = newH;
+
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(img, 0, 0, newW, newH);
+
+  const link = document.createElement("a");
+  link.download = "resized-image.png";
+  link.href = canvas.toDataURL("image/png");
+  link.click();
+}
+</script>
+
 </body>
 </html>
