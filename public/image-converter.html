@@ -1,46 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Image Converter - EasyPDF Pro</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Image Converter – EasyPDF Pro</title>
+
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header class="nav">
-  <div class="logo">EasyPDF Pro</div>
-  <nav>
-    <a href="/">Home</a>
-    <a href="/image-resizer.html">Resize</a>
-    <a href="/image-compressor.html">Compress</a>
-    <a href="/image-converter.html">Convert</a>
-  </nav>
-</header>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">EasyPDF Pro</div>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="image-resizer.html">Resize</a>
+      <a href="image-compressor.html">Compress</a>
+      <a href="image-converter.html" class="active">Convert</a>
+    </nav>
+  </header>
 
-<main class="tool-container">
-  <h1>Image Converter</h1>
-  <p>Convert images between JPG, PNG, WEBP, AVIF and more.</p>
+  <!-- MAIN -->
+  <main class="container">
+    <h1>Image Converter</h1>
+    <p class="subtitle">
+      Convert images between JPG, PNG, WEBP, AVIF and more.
+      100% browser-based. No upload.
+    </p>
 
-  <div class="card">
-    <input type="file" id="fileInput" accept="image/*">
-    <br><br>
+    <div class="card">
 
-    <label>Select output format</label>
-    <select>
-      <option>PNG</option>
-      <option>JPG</option>
-      <option>WEBP</option>
-      <option>AVIF</option>
-    </select>
+      <!-- Upload -->
+      <label class="upload-box">
+        <input type="file" id="imageInput" accept="image/*">
+        <span>Click or Drop Image Here</span>
+      </label>
 
-    <br><br>
-    <button class="primary-btn">Convert & Download</button>
-  </div>
-</main>
+      <!-- Format Select -->
+      <div class="field">
+        <label for="format">Convert to</label>
+        <select id="format">
+          <option value="image/png">PNG</option>
+          <option value="image/jpeg">JPG</option>
+          <option value="image/webp">WEBP</option>
+        </select>
+      </div>
 
-<footer>
-  © 2026 EasyPDF Pro
-</footer>
+      <!-- Button -->
+      <button id="convertBtn">Convert & Download</button>
 
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    © 2026 EasyPDF Pro
+  </footer>
+
+<script src="converter.js"></script>
 </body>
 </html>

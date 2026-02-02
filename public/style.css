@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: Arial, sans-serif;
 }
 
 body {
@@ -10,10 +10,10 @@ body {
   color: #222;
 }
 
-/* NAVBAR */
-.navbar {
-  background: #3f66e0;
-  color: #fff;
+/* HEADER */
+.header {
+  background: #4169e1;
+  color: white;
   padding: 14px 24px;
   display: flex;
   justify-content: space-between;
@@ -21,118 +21,102 @@ body {
 }
 
 .logo {
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 20px;
+  font-weight: bold;
 }
 
-.logo span {
-  color: #ffdf6c;
-}
-
-.navbar nav a {
-  color: #fff;
-  margin-left: 18px;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.navbar nav a:hover {
-  text-decoration: underline;
-}
-
-/* HERO */
-.hero {
-  text-align: center;
-  padding: 60px 20px;
-  background: linear-gradient(135deg, #4f7cff, #3f66e0);
+.nav a {
   color: white;
-}
-
-.hero h1 {
-  font-size: 36px;
-  margin-bottom: 12px;
-}
-
-.hero p {
-  font-size: 16px;
-  opacity: 0.95;
-}
-
-/* TOOLS */
-.tools {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
-  padding: 40px 20px;
-  max-width: 1100px;
-  margin: auto;
-}
-
-.tool-card {
-  background: #fff;
-  padding: 26px;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-  transition: transform 0.2s ease;
-}
-
-.tool-card:hover {
-  transform: translateY(-4px);
-}
-
-.tool-card h2 {
-  margin-bottom: 10px;
-}
-
-.tool-card p {
-  font-size: 14px;
-  color: #555;
-  margin-bottom: 20px;
-}
-
-.btn {
-  display: inline-block;
-  background: #3f66e0;
-  color: #fff;
-  padding: 10px 16px;
-  border-radius: 8px;
   text-decoration: none;
-  font-weight: 600;
-}
-
-.btn:hover {
-  background: #3456c5;
-}
-
-/* WHY */
-.why {
-  background: #fff;
-  padding: 40px 20px;
-  text-align: center;
-}
-
-.why h2 {
-  margin-bottom: 20px;
-}
-
-.why ul {
-  list-style: none;
-}
-
-.why li {
-  margin: 10px 0;
+  margin-left: 20px;
   font-size: 15px;
 }
 
-/* FOOTER */
-footer {
-  text-align: center;
-  padding: 20px;
-  font-size: 14px;
-  color: #666;
+.nav a.active {
+  text-decoration: underline;
 }
 
-footer a {
-  color: #3f66e0;
-  text-decoration: none;
+/* MAIN */
+.container {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 0 20px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: #555;
+  margin-bottom: 30px;
+}
+
+/* CARD */
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
+
+/* UPLOAD */
+.upload-box {
+  display: block;
+  border: 2px dashed #4169e1;
+  border-radius: 10px;
+  padding: 40px;
+  cursor: pointer;
+  margin-bottom: 25px;
+  color: #4169e1;
+  font-weight: bold;
+}
+
+.upload-box input {
+  display: none;
+}
+
+/* FIELD */
+.field {
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+.field select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+}
+
+/* BUTTON */
+button {
+  width: 100%;
+  padding: 14px;
+  background: #4169e1;
+  border: none;
+  color: white;
+  font-size: 17px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #365edc;
+}
+
+/* FOOTER */
+.footer {
+  margin-top: 60px;
+  padding: 20px;
+  text-align: center;
+  color: #777;
+  font-size: 14px;
 }
