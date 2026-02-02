@@ -1,70 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Image Resizer – EasyPDF Pro</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header class="topbar">
-  <div class="logo">EasyPDF Pro</div>
+<header class="header">
+  <div class="logo">EasyPDF<span>Pro</span></div>
   <nav>
-    <a href="index.html">Home</a>
-    <a href="image-resizer.html" class="active">Resize</a>
+    <a href="/">Home</a>
+    <a href="image-resizer.html">Resize</a>
     <a href="image-compressor.html">Compress</a>
     <a href="image-converter.html">Convert</a>
   </nav>
 </header>
 
-<main class="container">
+<section class="hero">
   <h1>Image Resizer</h1>
-  <p class="subtitle">
-    Resize images by percentage or custom width & height.  
-    100% browser based. No upload.
-  </p>
+  <p>Resize images by percentage or custom width & height. 100% browser-based.</p>
+</section>
 
-  <div class="card">
+<section class="tools">
+  <div class="tool-card">
 
-    <label class="upload-box">
-      <input type="file" id="imageInput" accept="image/*" hidden />
-      <span>📂 Click to select image</span>
-    </label>
+    <input type="file" id="fileInput" accept="image/*">
 
-    <div class="resize-options">
+    <div style="margin:15px 0;">
       <label>
-        <input type="radio" name="mode" value="percent" checked />
+        <input type="radio" name="mode" value="percent" checked>
         Percentage (%)
       </label>
+      &nbsp;&nbsp;
       <label>
-        <input type="radio" name="mode" value="dimension" />
+        <input type="radio" name="mode" value="custom">
         Width & Height (px)
       </label>
     </div>
 
     <div id="percentBox">
-      <input type="range" id="percentRange" min="10" max="100" value="50" />
-      <div class="range-value">
-        Size: <span id="percentValue">50</span>%
-      </div>
+      <input type="range" id="percentRange" min="10" max="100" value="50">
+      <p>Size: <span id="percentValue">50</span>%</p>
     </div>
 
-    <div id="dimensionBox" style="display:none;">
-      <input type="number" id="widthInput" placeholder="Width (px)" />
-      <input type="number" id="heightInput" placeholder="Height (px)" />
+    <div id="customBox" style="display:none;">
+      <input type="number" id="widthInput" placeholder="Width (px)">
+      <input type="number" id="heightInput" placeholder="Height (px)">
     </div>
 
-    <button id="resizeBtn">Resize & Download</button>
+    <button onclick="resizeImage()">Resize & Download</button>
 
     <canvas id="canvas" style="display:none;"></canvas>
+
   </div>
-</main>
+</section>
 
 <footer>
-  © 2026 EasyPDF Pro
-</footer>
-
-<script src="resizer.js"></script>
-</body>
-</html>
+  ©

@@ -1,80 +1,53 @@
-
-const imageInput = document.getElementById("imageInput");
-const resizeBtn = document.getElementById("resizeBtn");
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-
-const percentRange = document.getElementById("percentRange");
-const percentValue = document.getElementById("percentValue");
-
-const percentBox = document.getElementById("percentBox");
-const dimensionBox = document.getElementById("dimensionBox");
-
-const widthInput = document.getElementById("widthInput");
-const heightInput = document.getElementById("heightInput");
-
 let img = new Image();
 
-// Slider value update
-percentRange.addEventListener("input", () => {
-  percentValue.textContent = percentRange.value;
+document.getElementById("fileInput").addEventListener("change", e => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = ev => img.src = ev.target.result;
+  reader.readAsDataURL(file);
 });
 
-// Radio switch
-document.querySelectorAll('input[name="mode"]').forEach(radio => {
+document.querySelectorAll("input[name='mode']").forEach(radio => {
   radio.addEventListener("change", () => {
-    if (radio.value === "percent") {
-      percentBox.style.display = "block";
-      dimensionBox.style.display = "none";
-    } else {
-      percentBox.style.display = "none";
-      dimensionBox.style.display = "block";
-    }
+    document.getElementById("percentBox").style.display =
+      radio.value === "percent" && radio.checked ? "block" : "none";
+    document.getElementById("customBox").style.display =
+      radio.value === "custom" && radio.checked ? "block" : "none";
   });
 });
 
-// Resize button
-resizeBtn.addEventListener("click", () => {
-  if (!imageInput.files.length) {
+document.getElementById("percentRange").addEventListener("input", e => {
+  document.getElementById("percentValue").innerText = e.target.value;
+});
+
+function resizeImage() {
+  if (!img.src) {
     alert("Please select an image");
     return;
   }
 
-  const file = imageInput.files[0];
-  const reader = new FileReader();
+  const canvas = document.getElementById("canvas");
+  const ctx = canvas.getContext("2d");
 
-  reader.onload = () => {
-    img.onload = () => {
-      let newWidth, newHeight;
+  let width, height;
+  const percent = document.getElementById("percentRange").value;
 
-      const mode = document.querySelector('input[name="mode"]:checked').value;
+  if (document.querySelector("input[value='percent']").checked) {
+    width = img.width * percent / 100;
+    height = img.height * percent / 100;
+  } else {
+    width = parseInt(document.getElementById("widthInput").value);
+    height = parseInt(document.getElementById("heightInput").value);
+  }
 
-      if (mode === "percent") {
-        const percent = percentRange.value / 100;
-        newWidth = img.width * percent;
-        newHeight = img.height * percent;
-      } else {
-        newWidth = parseInt(widthInput.value);
-        newHeight = parseInt(heightInput.value);
+  canvas.width = width;
+  canvas.height = height;
+  ctx.drawImage(img, 0, 0, width, height);
 
-        if (!newWidth || !newHeight) {
-          alert("Enter valid width & height");
-          return;
-        }
-      }
-
-      canvas.width = newWidth;
-      canvas.height = newHeight;
-      ctx.drawImage(img, 0, 0, newWidth, newHeight);
-
-      const link = document.createElement("a");
-      link.download = "resized-image.png";
-      link.href = canvas.toDataURL("image/png");
-      link.click();
-    };
-
-    img.src = reader.result;
-  };
-
-  reader.readAsDataURL(file);
-});
+  const link = document.createElement("a");
+  link.download = "resized-image.png";
+  link.href = canvas.toDataURL("image/png");
+  link.click();
+}
